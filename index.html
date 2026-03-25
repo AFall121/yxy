@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/imgs/favicon_io/favicon.ico">
+    <link rel="apple-touch-icon" href="/imgs/favicon_io/apple-touch-icon.png">
+    <link rel="manifest" href="/imgs/favicon_io/site.webmanifest">
+
+    <title>夏影,生日快乐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .title {
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 0 40px rgba(255, 255, 255, 0.2);
+            animation: glow 2s ease-in-out infinite alternate;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #ffeaa7;
+            margin-top: 10px;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+                    0 0 30px rgba(255, 255, 255, 0.3),
+                    0 0 40px rgba(255, 255, 255, 0.2);
+            }
+
+            to {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
+                    0 0 40px rgba(255, 255, 255, 0.5),
+                    0 0 50px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out backwards;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .photo-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .photo-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .photo-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .photo-card:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .photo-card:nth-child(5) {
+            animation-delay: 1.0s;
+        }
+
+        .photo-card:nth-child(6) {
+            animation-delay: 1.2s;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-caption {
+            padding: 15px;
+            color: #fff;
+            text-align: center;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .blessing-text {
+            text-align: center;
+            padding: 40px 20px;
+            color: #fff;
+            font-size: 1.8rem;
+            line-height: 1.8;
+            animation: fadeInUp 2s ease-out;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .photo-gallery {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
+            .photo-card img {
+                height: 200px;
+            }
+
+            .blessing-text {
+                font-size: 1.4rem;
+                padding: 30px 15px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .photo-card img {
+                height: 180px;
+            }
+
+            .blessing-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🎂 生日快乐 🎂</h1>
+            <p class="subtitle">愿你的每一天都如星光般璀璨</p>
+        </div>
+
+        <div class="photo-gallery">
+            <div class="photo-card">
+                <img src="/imgs/1.jpg" alt="美好回忆 1">
+                <div class="photo-caption">✨ 愿你充满希望，勇往无前。</div>
+            </div>
+            <div class="photo-card">
+                <img src="/imgs/2.jpg" alt="美好回忆 2">
+                <div class="photo-caption">🌟 每天都要甜甜的.</div>
+            </div>
+            <div class="photo-card">
+                <img src="/imgs/3.jpg" alt="美好回忆 3">
+                <div class="photo-caption">💫 如花般灿烂,沁人心脾.</div>
+            </div>
+            <div class="photo-card">
+                <img src="/imgs/4.jpg" alt="美好回忆 4">
+                <div class="photo-caption">⭐ 如光般温暖,照亮你我.</div>
+            </div>
+            <div class="photo-card">
+                <img src="/imgs/yxy.jpg" alt="美好回忆 5">
+                <div class="photo-caption">🎉 愿你脚踏实地，也愿你仰望星空。</div>
+            </div>
+            <div class="photo-card">
+                <img src="/imgs/happy-birthday.png" alt="美好回忆 6">
+                <div class="photo-caption">💖平安喜乐，诸事顺遂。</div>
+            </div>
+        </div>
+
+        <div class="blessing-text">
+            <p>🎈 生日快乐! 🎈</p>
+            <p>愿这特别的一天充满惊喜与欢乐</p>
+            <p>愿你的未来如满天星斗般闪耀</p>
+            <p>健康、幸福、梦想成真!</p>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ | 祝你生日快乐!</p>
+        </div>
+    </div>
+
+    <script>
+        // 粒子效果
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        let animationId;
+
+        // 设置 canvas 尺寸
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        setCanvasSize();
+
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            init();
+        });
+
+        // 创建粒子类
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.fade = Math.random() * 0.02 + 0.01;
+                this.fadeDirection = Math.random() > 0.5 ? 1 : -1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // 边界检测
+                if (this.x > canvas.width || this.x < 0) {
+                    this.speedX = -this.speedX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.speedY = -this.speedY;
+                }
+
+                // 透明度变化
+                this.opacity += this.fade * this.fadeDirection;
+                if (this.opacity >= 1 || this.opacity <= 0.2) {
+                    this.fadeDirection = -this.fadeDirection;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // 添加光晕效果
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+            }
+        }
+
+        // 初始化粒子
+        function init() {
+            particlesArray = [];
+            const numberOfParticles = Math.floor((canvas.width * canvas.height) / 10000);
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        // 动画循环
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+
+            // 连接相近的粒子
+            connectParticles();
+
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // 连接粒子
+        function connectParticles() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.2 - distance / 500})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        init();
+        animate();
+
+        // 添加鼠标交互
+        let mouse = {
+            x: null,
+            y: null,
+            radius: 150
+        }
+
+        canvas.addEventListener('mousemove', (event) => {
+            mouse.x = event.x;
+            mouse.y = event.y;
+
+            // 鼠标附近的粒子加速运动
+            particlesArray.forEach(particle => {
+                let dx = mouse.x - particle.x;
+                let dy = mouse.y - particle.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < mouse.radius) {
+                    particle.speedX += dx * 0.0001;
+                    particle.speedY += dy * 0.0001;
+                }
+            });
+        });
+
+        canvas.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // 触摸支持（移动端）
+        canvas.addEventListener('touchmove', (event) => {
+            event.preventDefault();
+            mouse.x = event.touches[0].clientX;
+            mouse.y = event.touches[0].clientY;
+        });
+
+        canvas.addEventListener('touchend', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+    </script>
+</body>
+
+</html>
